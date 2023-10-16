@@ -24,7 +24,7 @@ SE3 <- sd(Data[1:20]) / sqrt(20)
 par(new=TRUE)  # グラフの重ね書きを許可
 
 # 平均値と標準偏差について描画する
-arrows(Mean, 0, Mean, 0.1, lwd=3, col="blue")
+arrows(Mean, 0, Mean, 0.01, lwd=3, col="blue")
 arrows(Mean, 0, Mean-SD, 0, lwd=3, col="red")
 arrows(Mean, 0, Mean+SD, 0, lwd=3, col="red")
 
