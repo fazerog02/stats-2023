@@ -7,26 +7,28 @@ data <- read.table("weight.txt", header = TRUE)  # ファイルからデータ�
 previous_status <- c(mean(data$A), sd(data$A))  # 投薬前のデータの平均値と標準偏差を計算
 current_status <- c(mean(data$B), sd(data$B))  # 投薬後のデータの平均値と標準偏差を計算
 
-png("previous.png", width = 512, height = 512)
-previous_hist <- hist(data$A, xlab = "weight", ylab = "frequency", main = "previous histogram")
-par(new = TRUE)
+png("previous.png", width = 512, height = 512)  # グラフを画像保存する
+previous_hist <- hist(data$A, xlab = "weight", ylab = "frequency", main = "previous histogram")  # 投薬前のデータでヒストグラムを描画
+par(new = TRUE)  # グラフの重ね合わせを許可
 previous_label_height <- max(previous_hist$counts) / 2  # 矢印等を画面中央に表示するために最大出現頻度/2を計算
-points(previous_status[1], previous_label_height, pch = 16, col = "red", cex = 1.5)
+points(previous_status[1], previous_label_height, pch = 16, col = "red", cex = 1.5)  # 平均値を点で描画
+# 標準偏差を矢印で描画
 arrows(previous_status[1], previous_label_height, previous_status[1] - previous_status[2], previous_label_height, col = "blue", lwd = 1.5)
 arrows(previous_status[1], previous_label_height, previous_status[1] + previous_status[2], previous_label_height, col = "blue", lwd = 1.5)
-dev.off()
+dev.off()  # 描画を終了
 
-png("current.png", width = 512, height = 512)
-current_hist <- hist(data$B, xlab = "weight", ylab = "frequency", main = "current histogram")
-par(new = TRUE)
+png("current.png", width = 512, height = 512)  # グラフを画像保存する
+current_hist <- hist(data$B, xlab = "weight", ylab = "frequency", main = "current histogram")  # 投薬前のデータでヒストグラムを描画
+par(new = TRUE)  # グラフの重ね合わせを許可
 current_label_height <- max(current_hist$counts) / 2  # 矢印等を画面中央に表示するために最大出現頻度/2を計算
-points(current_status[1], current_label_height, pch = 16, col = "red", cex = 1.5)
+points(current_status[1], current_label_height, pch = 16, col = "red", cex = 1.5)  # 平均値を点で描画
+# 標準偏差を矢印で描画
 arrows(current_status[1], current_label_height, current_status[1] - current_status[2], current_label_height, col = "blue", lwd = 1.5)
 arrows(current_status[1], current_label_height, current_status[1] + current_status[2], current_label_height, col = "blue", lwd = 1.5)
-dev.off()
+dev.off()  # 描画を終了
 
 # (3)
-t_result <- t.test(data$A, data$B, paired = TRUE, var.equal = TRUE)
+t_result <- t.test(data$A, data$B, paired = TRUE, var.equal = TRUE)  # 関連2群でt検定
 
 # (4)
 print(t_result)
@@ -43,7 +45,7 @@ print(t_result)
 #          0.9982
 
 # (5)
-no_relation_t_result <- t.test(data$A, data$B)
+no_relation_t_result <- t.test(data$A, data$B)  # 独立2群でt検定
 print(no_relation_t_result)
 
 #        Welch Two Sample t-test
@@ -58,6 +60,7 @@ print(no_relation_t_result)
 #   60.9742   59.9760
 
 # (6)
+# 正規性を検証
 a_ks_test_result <- ks.test(data$A, "pnorm", mean = mean(data$A), sd = sd(data$A))
 b_ks_test_result <- ks.test(data$B, "pnorm", mean = mean(data$A), sd = sd(data$A))
 print(a_ks_test_result)
@@ -75,6 +78,7 @@ print(b_ks_test_result)
 # D = 0.13286, p-value = 0.3124
 # alternative hypothesis: two-sided
 
+# 等分散性を検証
 var_test_result <- var.test(data$A, data$B)
 print(var_test_result)
 
