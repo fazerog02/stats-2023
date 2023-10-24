@@ -119,3 +119,4 @@ effect <- aov_result[[1]]["group", "Sum Sq"] / aov_result[[1]]["Residuals", "Sum
 # 効果量を表示
 cat("effect: ")
 print(effect)
+# effect: [1] 0.1230013
