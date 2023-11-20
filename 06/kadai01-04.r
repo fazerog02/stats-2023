@@ -24,59 +24,60 @@ p <- sum(diff_r >= diff) / n  # p値を計算する
 cat("p-value: ")
 print(p)
 # p-value: [1] 0.1316
+# p = 0.1316 > α = 0.05 なので帰無仮説は棄却されず，AとBに有意な差があるとは言えない．
 
 png("kadai06-02.png", width = 512, height = 512)  # グラフを画像で保存する
-hist(raw_data$A, breaks = 15, xlab = "value", ylab = "frequency", main = "Group A of data_r.txt")  # Aのデータでヒストグラムを描画
-par(new = TRUE)  # グラフの重ね合わせを許可
+# hist(raw_data$A, breaks = 15, xlab = "value", ylab = "frequency", main = "Group A of data_r.txt")  # Aのデータでヒストグラムを描画
+# par(new = TRUE)  # グラフの重ね合わせを許可
 # points(diff, y_center, pch = 16, col = "red", cex = 1.5)  # 実測値を点で描画
 dev.off()  # 画像保存
 
 # (3)
-# ps <- 0
-# mean_p <- 0
-# sd_p <- 0
-# n_p <- 0
+ps <- 0
+mean_p <- 0
+sd_p <- 0
+n_p <- 0
 
-# r <- 10
-# n <- 25
-# m <- 0
+r <- 10
+n <- 25
+m <- 0
 
-# while (n < 50000) {
-#   n <- n * 2
-#   m <- m + 1
-#   for (j in 1:r) {
-#     diff_r <- 0
-#     for(i in 1:n) {
-#       data_r <- sample(data, replace = FALSE)
-#       a_r <- data_r[seq_along(raw_data$A)]
-#       b_r <- data_r[(length(raw_data$A) + 1):length(data_r)]
-#       diff_r[i] <- (mean(a_r) - mean(b_r))
-#     }
-#     diff_r[n + 1] <- diff
-#     ps[j] <- sum(diff_r >= diff) / (n + 1)
-#     mean_p[m] <- mean(ps)
-#     sd_p[m] <- sd(ps)
-#     n_p[m] <- n
-#   }
-#   print(n)
-# }
-# # 各種値の表示
-# cat("m: ")
-# print(m)
-# cat("ps: ")
-# print(ps)
-# cat("mean_p: ")
-# print(mean_p)
-# cat("sd_p: ")
-# print(sd_p)
-# cat("n_p: ")
-# print(n_p)
-# png("kadai06-03.png", width = 512, height = 512)  # グラフを画像で保存する
-# matplot(n_p, cbind(mean_p, sd_p), type = "l", col = c("blue", "red"), lwd = 2, xlab = "N", ylab = "value", lty = 1)
-# legend("topleft", legend = c("Mean", "SD"), col = c("blue", "red"), lwd = 2, lty = 1)
-# title("Mean and SD of p-value")
-# dev.off()  # 画像を保存
-# # n >= 12800からあまり値が変化していないので，n = 10000程度が好ましい
+while (n < 50000) {
+  n <- n * 2
+  m <- m + 1
+  for (j in 1:r) {
+    diff_r <- 0
+    for(i in 1:n) {
+      data_r <- sample(data, replace = FALSE)
+      a_r <- data_r[seq_along(raw_data$A)]
+      b_r <- data_r[(length(raw_data$A) + 1):length(data_r)]
+      diff_r[i] <- (mean(a_r) - mean(b_r))
+    }
+    diff_r[n + 1] <- diff
+    ps[j] <- sum(diff_r >= diff) / (n + 1)
+    mean_p[m] <- mean(ps)
+    sd_p[m] <- sd(ps)
+    n_p[m] <- n
+  }
+  print(n)
+}
+# 各種値の表示
+cat("m: ")
+print(m)
+cat("ps: ")
+print(ps)
+cat("mean_p: ")
+print(mean_p)
+cat("sd_p: ")
+print(sd_p)
+cat("n_p: ")
+print(n_p)
+png("kadai06-03.png", width = 512, height = 512)  # グラフを画像で保存する
+matplot(n_p, cbind(mean_p, sd_p), type = "l", col = c("blue", "red"), lwd = 2, xlab = "N", ylab = "value", lty = 1)
+legend("topleft", legend = c("Mean", "SD"), col = c("blue", "red"), lwd = 2, lty = 1)
+title("Mean and SD of p-value")
+dev.off()  # 画像を保存
+# n >= 12800からあまり値が変化していないので，n = 10000程度が好ましい
 
 # (4)
 library(perm)
