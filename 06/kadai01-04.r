@@ -23,6 +23,8 @@ diff_r[n] <- diff  # 実際の観測値をデータに加える
 p <- sum(diff_r >= diff) / n  # p値を計算する
 cat("p-value: ")
 print(p)
+# p-value: [1] 0.1316
+
 png("kadai06-02.png", width = 512, height = 512)  # グラフを画像で保存する
 hist(raw_data$A, breaks = 15, xlab = "value", ylab = "frequency", main = "Group A of data_r.txt")  # Aのデータでヒストグラムを描画
 par(new = TRUE)  # グラフの重ね合わせを許可
