@@ -22,6 +22,7 @@ for (i in 1:n - 1) {
 }
 diff_r[n] <- diff  # 実際の観測値をデータに加える
 p <- sum(diff_r >= diff) / n  # p値を計算する
+# 結果の表示
 cat("p-value: ")
 print(p)
 # p-value: [1] 0.032
@@ -38,8 +39,8 @@ dev.off()  # 画像保存
 # p = 0.0318 < α = 0.05 なので帰無仮説は棄却され，AとBに有意な差がないとは言えない．
 
 # (4)
-t_result <- t.test(raw_data$A, raw_data$B, equal.var = TRUE, alternative = "g")
-print(t_result)
+t_result <- t.test(raw_data$A, raw_data$B, equal.var = TRUE, alternative = "g")  # 片側t検定を実施
+print(t_result)  # 結果を表示
 # p-value: [1] 0.032
 
 #         Welch Two Sample t-test
@@ -52,28 +53,3 @@ print(t_result)
 # sample estimates:
 # mean of x mean of y 
 #   53.1654   50.3000 
-
-# #        Permutation Test using Asymptotic Approximation
-
-# # data:  raw_data$A and raw_data$B
-# # Z = 1.4978, p-value = 0.06709
-# # alternative hypothesis: true mean raw_data$A - mean raw_data$B is greater than 0
-# # sample estimates:
-# # mean raw_data$A - mean raw_data$B
-# #                          1.075268
-
-# t_result <- t.test(raw_data$A, raw_data$B, equal.var = TRUE, alternative = "g")  # t検定をする
-# print(t_result)  # 結果を表示
-
-# #        Welch Two Sample t-test
-
-# # data:  raw_data$A and raw_data$B
-# # t = 1.4997, df = 361.18, p-value = 0.06729
-# # alternative hypothesis: true difference in means is greater than 0
-# # 95 percent confidence interval:
-# #  -0.1071251        Inf
-# # sample estimates:
-# # mean of x mean of y
-# #  50.70256  49.62729
-
-# # t検定は前提条件として等分散性と正規性を満たさないといけないため，今回のp値は信頼できる値ではなく，ランダマイゼーションが必要となる．
